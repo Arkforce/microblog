@@ -1,41 +1,25 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Microblog</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="mt-5">Microblog</h1>
-      <form action="{{ url_for('add_post') }}" method="post" class="mb-3">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-          <label for="content">Content</label>
-          <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Post</button>
-      </form>
-      <div class="posts">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groceries list</title>
+</head>
+<body>
+    <h1>Posts</h1>
+    <form action="{{ url_for('add_post') }}" method="post">
+        <textarea name="content" placeholder="Write your post here..." required></textarea>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
         {% for post in posts %}
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text">{{ post.content }}</p>
-              <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </form>
-            </div>
-          </div>
+            <li>
+                {{ post.content }}
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
         {% endfor %}
-      </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+    </ul>
+</body>
 </html>
