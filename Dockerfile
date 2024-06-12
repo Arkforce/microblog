@@ -26,8 +26,8 @@ EOF
 # Expose the port that the Flask app runs on
 EXPOSE 5000
 
-# Set the environment variable to ensure the app runs in production mode
-ENV FLASK_ENV=production
+# Install Gunicorn
+RUN pip install gunicorn
 
-# Run the application
-CMD ["python", "app.py"]
+# Command to run the application using Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
