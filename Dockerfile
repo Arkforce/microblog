@@ -13,8 +13,21 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . .
 
-# Expose the port that the Flask app runs on
-EXPOSE 8000
+# Set environment variable
+ENV FLASK_APP=app.py
 
-# Run the application with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+# Run the flask shell and execute commands
+RUN flask shell <<EOF
+from app import db
+db.create_all()
+exit()
+EOF
+
+# Expose the port that the Flask app runs on
+EXPOSE 5000
+
+# Set the environment variable to ensure the app runs in production mode
+ENV FLASK_ENV=production
+
+# Run the application
+CMD ["python", "app.py"]
